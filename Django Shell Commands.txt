@@ -1,0 +1,90 @@
+from newsapp.models import *
+
+1. Создать двух пользователей (с помощью метода User.objects.create_user('username')).
+
+u1 = User.objects.create_user(username='Vanya')
+u2 = User.objects.create_user(username='Smith')
+
+2. Создать два объекта модели Author, связанные с пользователями.
+
+Author.objects.create(authorUser=u1)
+Author.objects.create(authorUser=u2)
+
+3. Добавить 4 категории в модель Category.
+
+Category.objects.create(name='IT')
+Category.objects.create(name='Business')
+Category.objects.create(name='Travel')
+Category.objects.create(name='Sport')
+
+4. Добавить 2 статьи и 1 новость.
+
+5. Присвоить им категории (как минимум в одной статье/новости должно быть не меньше 2 категорий).
+
+author = Author.objects.get(id=1)
+Post.objects.create(author=author, options = 'AR', title='Iceland Moments', text='Make the most of each moment when you travel.')
+Post.objects.get(id=1).postConnection.add(Category.objects.get(id=3))
+Post.objects.create(author=author, options = 'AR', title='FIFA World Cup', text='The Round of 16 of the Qatar World Cup is over.')
+Post.objects.get(id=2).postConnection.add(Category.objects.get(id=3))
+Post.objects.get(id=2).postConnection.add(Category.objects.get(id=4))
+author2 = Author.objects.get(id=2)
+Post.objects.create(author=author2, options = 'NW', title='European travel prices start to fall', text='Travel prices in Europe have fallen for the first time in 2022, according to the latest data from travel management company TravelPerk.')
+Post.objects.get(id=3).postConnection.add(Category.objects.get(id=2))
+Post.objects.get(id=3).postConnection.add(Category.objects.get(id=3))
+
+
+6. Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).
+
+
+Comment.objects.create(postComment=Post.objects.get(id=1), userComment=Author.objects.get(id=1).authorUser, textComment='I love Iceland!')
+Comment.objects.create(postComment=Post.objects.get(id=2), userComment=Author.objects.get(id=1).authorUser, textComment='I want to go to the World Cup!')
+Comment.objects.create(postComment=Post.objects.get(id=3), userComment=Author.objects.get(id=1).authorUser, textComment='Yes, you need a visa')
+Comment.objects.create(postComment=Post.objects.get(id=3), userComment=Author.objects.get(id=2).authorUser, textComment='Do I need a visa to enter Italy?')
+Comment.objects.create(postComment=Post.objects.get(id=2), userComment=Author.objects.get(id=2).authorUser, textComment='You know which team to support.')
+
+
+
+7. Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.
+
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).like()
+Comment.objects.get(id=2).dislike()
+Comment.objects.get(id=3).dislike()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=4).dislike()
+Comment.objects.get(id=5).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).dislike()
+
+
+8. Обновить рейтинги пользователей.
+
+Author.objects.get(authorUser=u1).update_rating()
+Author.objects.get(authorUser=u1).authorRating
+Author.objects.get(authorUser=u2).update_rating()
+Author.objects.get(authorUser=u2).authorRating
+
+9. Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).
+
+u_best = Author.objects.order_by('-authorRating').values('id')[0]['id']
+Author.objects.get(id=u_best).authorUser.username
+Author.objects.get(id=u_best).authorRating
+
+10. Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
+
+t_best = Post.objects.order_by('-rating').values('id')[0]['id']
+Post.objects.get(id=t_best).time_in.strftime('%d-%m-%y')
+Post.objects.get(id=t_best).author.authorUser.username
+Post.objects.get(id=t_best).rating
+Post.objects.get(id=t_best).title
+Post.objects.get(id=t_best).preview()
+
+11. Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
+'Iceland Moments'.join(f'Comment: {i}' for i in Comment.objects.filter(post_id=t_best))
