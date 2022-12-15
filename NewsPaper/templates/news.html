@@ -1,0 +1,41 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Our news
+{% endblock title %}
+
+
+{% block content %}
+    <h1>All latest news</h1>
+    <br>
+    <h3>You see {{ news|length }} publications</h3>
+    <br>
+    <h4>{{ time_now|date:'M d Y' }}</h4>
+    <hr>
+    {% if news %}
+        <table bgcolor="#99CCFF">
+            <tr>
+                <td>Author's name</td>
+                <td>Category</td>
+                <td>Date</td>
+                <td>Title</td>
+                <td>Text</td>
+                <td>Article rating</td>
+            </tr>
+            {% for post in news %}
+            <tr>
+                <td>{{ post.author }}</td>
+                <td>{{ post.options }}</td>
+                <td>{{ post.time_in|date:'M d Y' }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.text|truncatewords:20 }} </td>
+                <td>{{ post.rating }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h3>No news today!</h3>
+    {% endif %}
+    <br>
+    <h3>{{ new_publication|default_if_none:'More news coming soon!'}}</h3>
+{% endblock content %}

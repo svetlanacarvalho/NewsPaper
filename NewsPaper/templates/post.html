@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+{% block content %}
+    <h1>Welcome! I hope you enjoy this post.</h1>
+    <h4>{{ time_now|date:'M d Y' }}</h4>
+    <hr>
+    <h1 style="text-align: center;"><em>{{ post.title|censor }} written by {{ post.author }}</em></h1>
+    <p style="text-align: right;"><em>{{ post.time_in|date:'M d Y' }}</em></p>
+    <h3 style="text-align: justify;">{{ post.text|censor }}</h3>
+{% endblock content %}
