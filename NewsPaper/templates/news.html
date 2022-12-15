@@ -1,5 +1,8 @@
 {% extends 'flatpages/default.html' %}
 
+{% load static %}
+{% load custom_filters %}
+
 {% block title %}
 Our news
 {% endblock title %}
@@ -27,8 +30,8 @@ Our news
                 <td>{{ post.author }}</td>
                 <td>{{ post.options }}</td>
                 <td>{{ post.time_in|date:'M d Y' }}</td>
-                <td>{{ post.title }}</td>
-                <td>{{ post.text|truncatewords:20 }} </td>
+                <td>{{ post.title|censor }}</td>
+                <td>{{ post.text|truncatewords:20|censor }} </td>
                 <td>{{ post.rating }}</td>
             </tr>
             {% endfor %}

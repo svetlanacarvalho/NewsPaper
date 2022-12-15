@@ -1,4 +1,5 @@
 {% extends 'flatpages/default.html' %}
+
 {% load static %}
 {% load custom_filters %}
 
@@ -6,7 +7,7 @@
 Post
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+
 {% block content %}
     <h1>Welcome! I hope you enjoy this post.</h1>
     <h4>{{ time_now|date:'M d Y' }}</h4>
