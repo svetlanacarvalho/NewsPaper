@@ -16,6 +16,7 @@ Category.objects.create(name='IT')
 Category.objects.create(name='Business')
 Category.objects.create(name='Travel')
 Category.objects.create(name='Sport')
+Category.objects.create(name='Culture')
 
 4. Добавить 2 статьи и 1 новость.
 
@@ -27,11 +28,26 @@ Post.objects.get(id=1).postConnection.add(Category.objects.get(id=3))
 Post.objects.create(author=author, options = 'AR', title='FIFA World Cup', text='The Round of 16 of the Qatar World Cup is over.')
 Post.objects.get(id=2).postConnection.add(Category.objects.get(id=3))
 Post.objects.get(id=2).postConnection.add(Category.objects.get(id=4))
+Post.objects.create(author=author, options = 'AR', title='Great Painting', text='Five Times a Great Painting Predicted the Future.')
+Post.objects.get(id=4).postConnection.add(Category.objects.get(id=5))
+Post.objects.create(author=author, options = 'AR', title='A Guide to Changing Workplace Culture', text='It's up to you to effectively facilitate a workplace culture that allows each employee to flourish.')
+Post.objects.get(id=5).postConnection.add(Category.objects.get(id=5))
+Post.objects.create(author=author, options = 'NW', title='Culture Art Grand Awards presented', text='Presidential Culture and Art Grand Awards were presented at a ceremony held on Dec. 21.')
+Post.objects.get(id=6).postConnection.add(Category.objects.get(id=5))
+Post.objects.create(author=author, options = 'NW', title='December and January strikes: Who is striking and what are their pay claims?', text='Strikes have disrupted everything from train services to postal deliveries and hospital care.')
+Post.objects.get(id=7).postConnection.add(Category.objects.get(id=2))
 author2 = Author.objects.get(id=2)
 Post.objects.create(author=author2, options = 'NW', title='European travel prices start to fall', text='Travel prices in Europe have fallen for the first time in 2022, according to the latest data from travel management company TravelPerk.')
 Post.objects.get(id=3).postConnection.add(Category.objects.get(id=2))
 Post.objects.get(id=3).postConnection.add(Category.objects.get(id=3))
-
+Post.objects.create(author=author2, options = 'AR', title='Sports news in brief for December', text='Island nation wants to join Argentina at top table; players join Super W clubs; and French Polynesia hosts MMA tournament.')
+Post.objects.get(id=8).postConnection.add(Category.objects.get(id=4))
+Post.objects.create(author=author2, options = 'NW', title='Arctic storm brings holiday travel chaos to US', text='A "once-in-a-generation" winter storm with temperatures as low as -40 degrees Fahrenheit (Celsius) caused Christmas travel chaos')
+Post.objects.get(id=9).postConnection.add(Category.objects.get(id=3))
+Post.objects.create(author=author2, options = 'NW', title='Business Updates 2022', text='This was a massive year for Colorado Springs business news')
+Post.objects.get(id=10).postConnection.add(Category.objects.get(id=2)
+Post.objects.create(author=author2, options = 'NW', title='Flashback 2022: Web3, 5G tech, metaverse, and decentralisation', text='We grasped on what 2022 had in store for next-generational use cases and prophetic technological vision.')
+Post.objects.get(id=11).postConnection.add(Category.objects.get(id=1)
 
 6. Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).
 
