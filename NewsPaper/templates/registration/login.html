@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h3>Hello {{ user.username }}!</h3>
+        <h3><a href="{% url 'news' %}">All publications</a></h3>
+    {% else %}
+        <h3>Do you want to log in?</h3>
+        <hr>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="login">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+    {% endif %}
+{% endblock content %}

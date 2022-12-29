@@ -23,6 +23,13 @@ Our news
             <input type="submit" value="Search" />
     </form>
     <hr>
+
+    {% if perms.newsapp.add_post %}
+    <a href="{% url 'post_edit' %}">Create a post</a>
+    {% endif %}
+
+    <hr>
+
     {% if news %}
         <table bgcolor="#99CCFF">
             <tr>
@@ -32,7 +39,11 @@ Our news
                 <td>Title</td>
                 <td>Text</td>
                 <td>Article rating</td>
+                {% if perms.newsapp.change_post or perms.newsapp.delete_post %}
+                <td>Advanced options</td>
+                {% endif %}
             </tr>
+
             {% for post in news %}
             <tr>
                 <td>{{ post.author }}</td>
@@ -41,6 +52,14 @@ Our news
                 <td>{{ post.title|censor }}</td>
                 <td>{{ post.text|truncatewords:20|censor }} </td>
                 <td>{{ post.rating }}</td>
+                <td>
+                    {% if perms.newsapp.change_post %}
+                    <a href="{% url 'post_update' pk=post.id %}">Update</a>
+                    {% endif %}
+                    {% if perms.newsapp.delete_post %}
+                    <a href="{% url 'post_delete' pk=post.id %}">Delete</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>

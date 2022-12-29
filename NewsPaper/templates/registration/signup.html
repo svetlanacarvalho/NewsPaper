@@ -1,0 +1,14 @@
+{% extends "flatpages/default.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h3>Hello {{ user.username }}! You are already logged in.</h3>
+        <h3><a href="{% url 'news' %}">All publications</a></h3>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Sing up">
+        </form>
+    {% endif %}
+{% endblock content %}

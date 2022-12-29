@@ -3,6 +3,8 @@ from .models import Post
 from .search import PostFilter
 from .forms import PostForm
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 
 class PostsList(ListView):
     model = Post
@@ -29,7 +31,9 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    raise_exception = False
+    permission_required = ('newsapp.add_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
@@ -39,12 +43,18 @@ class PostCreate(CreateView):
         post.options = 'Новость'
         return super().form_valid(form)
 
-class PostUpdate(UpdateView):
+
+class PostUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    raise_exception = False
+    permission_required = ('newsapp.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
-class PostDelete(DeleteView):
+
+class PostDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    raise_exception = False
+    permission_required = ('simpleapp.delete_post',)
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('news')
